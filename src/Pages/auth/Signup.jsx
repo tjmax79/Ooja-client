@@ -18,6 +18,7 @@ const Register = () => {
   const [formData, setFormData] = useState(initialState)
   const history = useNavigate()
     const {dispatch} = useContext(AppContext)
+    const [loading,setloading]= useState(false)
 
 
     const handleSubmit = async (e)=>{
@@ -35,6 +36,8 @@ const Register = () => {
         }catch (error) {
           console.log(error)
           toast.error(error.response.data.message||error.response.data.error || "An error ocurred")
+      }finally{
+        setloading(false)
       }
   };
 
@@ -239,9 +242,11 @@ const Register = () => {
 
           <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
             <button
-              className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+              className={`inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500 $ {loading?"cursor-not-allowed opacity-50" :""}`}
+              disabled={loading}
             >
-              Create an account
+            {loading?"Loading...":"Create an account"}
+            
             </button>
 
             <p className="mt-4 text-sm text-gray-500 sm:mt-0">
